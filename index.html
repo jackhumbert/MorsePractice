@@ -1856,6 +1856,7 @@
                 if (e.repeat) return;
                 switch (e.key) {
                     case '[':
+                    case '1':
                     case 'a':
                     case 'A':
                     case ',':
@@ -1864,6 +1865,7 @@
                         handlePaddlePress('left', true);
                         break;
                     case ']':
+                    case '3':
                     case 'd':
                     case 'D':
                     case '.':
@@ -1887,6 +1889,7 @@
             document.addEventListener('keyup', (e) => {
                 switch (e.key) {
                     case '[':
+                    case '1':
                     case 'a':
                     case 'A':
                     case ',':
@@ -1895,6 +1898,7 @@
                         handlePaddlePress('left', false);
                         break;
                     case ']':
+                    case '3':
                     case 'd':
                     case 'D':
                     case '.':
