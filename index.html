@@ -230,9 +230,9 @@
             transition: none !important;
         }
 
-        #visual-btn.visual-flash {
-            background: #fff !important;
-            color: #000 !important;
+        .visual-flash {
+            background: #333 !important;
+            /*color: #000 !important;*/
             transition: none !important;
         }
 
@@ -1197,7 +1197,8 @@
 
         function playTone() {
             if (settings.visual) {
-                const visualBtn = document.getElementById('visual-btn');
+                const visualBtn = document.getElementById('output');
+                //const visualBtn = document.getElementById('visual-btn');
                 visualBtn.classList.add('visual-flash');
             }
 
@@ -1209,17 +1210,22 @@
             }
 
             const targetGain = settings.vol / volDivider;
-            gain.gain.setTargetAtTime(targetGain, audioContext.currentTime, 0.005);
+            gain.gain.setTargetAtTime(targetGain, audioContext.currentTime, 0.01);
+            osc.frequency.setValueAtTime(settings.tone * 0.95, audioContext.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(settings.tone,audioContext.currentTime + (1.200 / settings.wpm / 2));
+            //osc.frequency.linearRampToValueAtTime(settings.tone,audioContext.currentTime + (1.200 / settings.wpm));
         }
 
         function stopTone() {
-            const visualBtn = document.getElementById('visual-btn');
+            //const visualBtn = document.getElementById('visual-btn');
+            const visualBtn = document.getElementById('output');
             visualBtn.classList.remove('visual-flash');
 
             if (!audioContext || !gain) return;
 
             // Ramp down very low, not zero to avoid cutoff artifacts
-            gain.gain.setTargetAtTime(0.00001, audioContext.currentTime, 0.005);
+            gain.gain.setTargetAtTime(0.00001, audioContext.currentTime, 0.01);
+            osc.frequency.exponentialRampToValueAtTime(settings.tone * 0.95, 0.01);
         }
 
         // Get timing values for transmission (always strict)
